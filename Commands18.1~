@@ -1,0 +1,13 @@
+//Putting the file to hdfs
+
+hadoop fs -put /home/acadgild/Downloads/customers.dat /user/acadgild
+
+//Create the table customer with column family details
+
+create 'customer','details'
+
+
+//load the HBase library files into the Hadoop classpath
+export HADOOP_CLASSPATH=$HBASE_HOME/lib/* 
+
+

@@ -1,0 +1,45 @@
+//Putting the file to hdfs
+
+hadoop fs -put /home/acadgild/Downloads/customers.dat /user/acadgild
+
+//Create the table customer with column family details
+
+create 'customer','details'
+
+
+//load the HBase library files into the Hadoop classpath
+export HADOOP_CLASSPATH=$HBASE_HOME/lib/* 
+
+//run the MapReduce job by following below command to generate the HFiles
+
+hadoop jar /home/acadgild/Desktop/BKLoad.jar /user/acadgild/customers.dat /hbase_output_dir customer
+
+//store the HFiles contents into HBase table.
+
+hadoop jar /home/acadgild/Downloads/hbase-server-0.98.14-hadoop2.jar completebulkload /hbase_output_dir/ customer
+
+//Scan the table
+
+scan 'customer'
+ROW                   COLUMN+CELL                                               
+ 1                    column=details:age, timestamp=1498885191088, value=18     
+ 1                    column=details:location, timestamp=1498885191088, value=IN
+                      D                                                         
+ 1                    column=details:name, timestamp=1498885191088, value=Amit  
+ 2                    column=details:age, timestamp=1498885191088, value=20     
+ 2                    column=details:location, timestamp=1498885191088, value=PA
+                      K                                                         
+ 2                    column=details:name, timestamp=1498885191088, value=Sumit 
+ 3                    column=details:age, timestamp=1498885191088, value=26     
+ 3                    column=details:location, timestamp=1498885191088, value=AU
+                      S                                                         
+ 3                    column=details:name, timestamp=1498885191088, value=Rohit 
+ 4                    column=details:age, timestamp=1498885191088, value=24     
+ 4                    column=details:location, timestamp=1498885191088, value=UK
+ 4                    column=details:name, timestamp=1498885191088, value=Namit 
+4 row(s) in 5.4050 seconds
+
+
+ 
+
+
